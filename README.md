@@ -14,7 +14,7 @@ Follow these steps to run the app:
 ```bash
 cd GameStop
 ```
-3.Install dependencies:
+3. Install dependencies:
 ```bash
 npm install
 ```
