@@ -1,32 +1,57 @@
 <template>
-  <div>
-    <h1>Snake Game</h1>
+  <div class="game">
+    <span class="score">Score: {{score}}</span>
+    <snake @onFoodEated="increaseScore()" @onGameOver="showGameOverDialog($event)"></snake>
+    <game-over :status="gameOverStatus" :show="showGameOver" :score="score"></game-over>
   </div>
 </template>
 
 <script>
+import Snake from './SnakeComponents/SnakeGame.vue';
+import GameOver from './SnakeComponents/GameOver.vue';
+
 export default {
   name: 'SnakeGame',
-  props: {
-    msg: String
-  }
-}
+  components: {
+    Snake,
+    GameOver,
+  },
+  methods: {
+    increaseScore() {
+      this.score++;
+    },
+    showGameOverDialog(status) {
+      this.showGameOver = true;
+      this.gameOverStatus = status;
+    },
+  },
+  data: () => ({
+    score: 0,
+    showGameOver: false,
+    gameOverStatus: '',
+  }),
+};
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
+<style>
+html,body {
+  padding: 0 !important;
+  margin: 0 !important;
+  height: 100vh;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+
+.game {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+
+.score {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: white;
 }
 </style>
