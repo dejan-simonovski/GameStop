@@ -6,21 +6,19 @@ Make sure you have [Vue.js](https://vuejs.org/) installed.
 
 ## Getting Started
 Follow these steps to run the app:
+
 1. Clone the repository:
 [git clone https://github.com/dejan-simonovski/GameStop.git](https://github.com/dejan-simonovski/GameStop.git)
 
-3. Navigate to the project directory.
+2. Navigate to the project directory:
 ```bash
 cd GameStop
 ```
-
 3.Install dependencies:
 ```bash
 npm install
 ```
-
 4. Launch the app:
-
 ```bash
 npm run serve
 ```
