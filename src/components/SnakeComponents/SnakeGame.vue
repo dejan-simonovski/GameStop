@@ -26,10 +26,12 @@
         this.setTileValue(randomFoodTile, 'food');
       },
       paintTile(tile, color) {
-        const element = document.getElementById(`tile-${tile}`);
-        element.classList.remove('tile-with-food');
-        element.classList.remove('tile-with-snake');
-        element.classList.add(`tile-with-${color}`);
+        const element = document.getElementById(`tile-${tile - 1}`);
+        if (element) {
+          element.classList.remove('tile-with-food');
+          element.classList.remove('tile-with-snake');
+          element.classList.add(`tile-with-${color}`);
+        }
       },
       setTileValue(tile, value) {
         this.tiles[tile] = value;
