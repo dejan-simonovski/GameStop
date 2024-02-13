@@ -1,6 +1,6 @@
 <template>
     <div class="board">
-      <div class="tile" v-for="i in 225" :key="i" :id="`tile-${i}`"></div>
+      <div class="tile" v-for="i in 225" :key="i" :id="`tile-${i-1}`"></div>
     </div>
 </template>
   
