@@ -17,15 +17,9 @@ export default {
     increaseScore() {
       this.score++;
     },
-    showGameOverDialog(status) {
-      this.showGameOver = true;
-      this.gameOverStatus = status;
-    },
   },
   data: () => ({
     score: 0,
-    showGameOver: false,
-    gameOverStatus: '',
   }),
 };
 </script>
@@ -49,6 +43,6 @@ html,body {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: 20px;
   margin-bottom: 10px;
-  color: white;
+  color: black;
 }
 </style>
