@@ -1,5 +1,9 @@
 <template>
     <div class="container">
+      <span v-if="currentUser">Logged in as: {{ currentUser.username }}</span>
+      <button v-if="currentUser" @click="logout" class="button" style="padding:0.2em; margin:0.2em">Logout</button>
+    </div>
+    <div class="container">
       <div class="game-container">
         <img src="../assets/snake.png" alt="SNAKE">
         <router-link to="/snake" class="button-link">
@@ -21,11 +25,26 @@
     </div>
   </template>
   
-  <script>
-  export default {
-  
-  };
-  </script>
+<script>
+import { getCurrentUser, logout } from '@/auth'; 
+
+export default {
+  data() {
+    return {
+      currentUser: null
+    };
+  },
+  created() {
+    this.currentUser = getCurrentUser();
+  },
+  methods: {
+    logout() {
+      logout();
+      this.$router.push('/login');
+    }
+  }
+};
+</script>
   
 <style scoped>
 .container {
@@ -53,11 +72,9 @@
 }
   
 .button:hover {
-    color: lightgreen;
     background-color: red;
 }
   
-  /* Apply the style to the router-link */
 .button-link {
     text-decoration: none;
     color: white;
@@ -75,5 +92,6 @@ img {
     justify-content: center;
     margin: 5em;
 }
+
 </style>
   

@@ -3,28 +3,39 @@ import HomeView from '../views/HomeView.vue'
 import SnakeView from '../views/SnakeView.vue'
 import BreakoutView from '../views/BreakoutView.vue'
 import TicTacToeView from '../views/TicTacToeView.vue'
+import LoginView from '../views/LoginView.vue'
+import { isAuthenticated } from '@/auth'
 
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: HomeView
+    component: HomeView,
+    meta: { requiresAuth: true }
   },
   {
     path: '/snake',
     name: 'Snake',
-    component: SnakeView
+    component: SnakeView,
+    meta: { requiresAuth: true }
   },
   {
     path: '/breakout',
     name: 'Breakout',
-    component: BreakoutView
+    component: BreakoutView,
+    meta: { requiresAuth: true }
   },
   {
     path: '/tictactoe',
     name: 'TicTacToe',
-    component: TicTacToeView
+    component: TicTacToeView,
+     meta: { requiresAuth: true }
   },
+  {
+    path: '/login',
+    name: 'Login',
+    component: LoginView
+  }
 
   // {
   //   path: '/about',
@@ -40,5 +51,13 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth && !isAuthenticated()) {
+    next('/login');
+  } else {
+    next();
+  }
+});
 
 export default router
