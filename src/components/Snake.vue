@@ -1,20 +1,17 @@
 <template>
   <div class="game">
     <span class="score">Score: {{score}}</span>
-    <snake @onFoodEated="increaseScore()" @onGameOver="showGameOverDialog($event)"></snake>
-    <game-over :status="gameOverStatus" :show="showGameOver" :score="score"></game-over>
+    <snake @onFoodEated="increaseScore()"></snake>
   </div>
 </template>
 
 <script>
 import Snake from './SnakeComponents/SnakeGame.vue';
-import GameOver from './SnakeComponents/GameOver.vue';
 
 export default {
   name: 'SnakeGame',
   components: {
-    Snake,
-    GameOver,
+    Snake
   },
   methods: {
     increaseScore() {
