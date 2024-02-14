@@ -1,7 +1,7 @@
 <template>
   <div class="game">
     <span class="score">Score: {{score}}</span>
-    <snake @onFoodEated="increaseScore()"></snake>
+    <snake @onFoodEaten="increaseScore()"></snake>
   </div>
 </template>
 
