@@ -81,6 +81,7 @@ export default {
   
         if (this.tiles[this.snakeHeadIndex] === 'snake') {
           this.setTileValue(this.snakeHeadIndex, 'snake');
+          this.$emit('snakeDied');
           clearInterval(this.interval);
         }
   

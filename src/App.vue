@@ -1,6 +1,8 @@
 <template>
   <div class="logo-container">
-    <img src="./assets/logo.png" alt="GAMESTOP" class="logo">
+    <router-link to="/" class="logo-link">
+      <img src="./assets/logo.png" alt="GAMESTOP" class="logo">
+    </router-link>
   </div>
   <router-view></router-view>
 </template>
@@ -11,11 +13,15 @@
   max-width: 100%;
   margin: 0 auto;
   justify-content: center;
-  align-items: center;
 }
 
 .logo {
   transform: scale(0.3);
   transition: transform 0.3s ease;
+}
+
+.logo-link {
+  text-decoration: none; /* Remove underline from the link */
+  cursor: pointer; /* Change cursor to pointer on hover */
 }
 </style>
