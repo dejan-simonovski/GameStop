@@ -23,6 +23,14 @@
         </router-link>
       </div>
     </div>
+    <div class="container">
+      <div class="game-container">
+        <img src="../assets/hangman.png" alt="HANGMAN">
+        <router-link to="/hangman" class="button-link">
+          <button class="button">Hangman</button>
+        </router-link>
+      </div>
+    </div>
   </template>
   
 <script>
