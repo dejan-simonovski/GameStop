@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import SnakeView from '../views/SnakeView.vue'
 import BreakoutView from '../views/BreakoutView.vue'
 import TicTacToeView from '../views/TicTacToeView.vue'
+import HangmanView from '../views/HangmanView.vue'
 import LoginView from '../views/LoginView.vue'
 import { isAuthenticated } from '@/auth'
 
@@ -35,6 +36,12 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: LoginView
+  },
+  {
+    path: '/hangman',
+    name: 'Hangman',
+    component: HangmanView,
+    meta: { requiresAuth: true }
   }
 
   // {

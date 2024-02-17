@@ -21,7 +21,7 @@
 }
 
 .logo-link {
-  text-decoration: none; /* Remove underline from the link */
-  cursor: pointer; /* Change cursor to pointer on hover */
+  text-decoration: none;
+  cursor: pointer; 
 }
 </style>
