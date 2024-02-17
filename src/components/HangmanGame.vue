@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>Hangman Game</h1>
     <div>
       <p>Guess the word:</p>
       <p v-html="displayedWord"></p>
