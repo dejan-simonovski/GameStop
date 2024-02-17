@@ -1,36 +1,84 @@
 <template>
-  <div class="board">
+  <div>
+    <div class="board">
       <div class="tile" v-for="i in 225" :key="i" :id="`tile-${i-1}`"></div>
+    </div>
   </div>
+  <SnakeControls :isPaused="isPaused" :borderStyle="border" @toggle-border="toggleBorder" @toggle-pause="togglePause" @toggle-speed="toggleSpeed"/>
 </template>
 
 <script>
+import SnakeControls from './SnakeControls.vue';
+
 export default {
+  components: {
+    SnakeControls
+  },
   data: () => ({
-      tiles: [],
-      snakeHeadIndex: 112,
-      snakeTailIndex: [114, 113, 112],
-      gameSpeed: 150,
-      direction: 'left',
+    tiles: [],
+    snakeHeadIndex: 112,
+    snakeTailIndex: [114, 113, 112],
+    gameSpeed: 150,
+    direction: 'left',
+    isPaused: true,
+    border: 'solid'
   }),
   methods: {
     setRandomFoodTile() {
-        const randomFoodTile = (Math.floor(Math.random() * 225)) + 1;
-        if (this.tiles[randomFoodTile]) {
-            this.setRandomFoodTile();
-            return;
-        }
-  
-        this.setTileValue(randomFoodTile, 'food');
-
+      const randomFoodTile = (Math.floor(Math.random() * 225)) + 1;
+      if (this.tiles[randomFoodTile]) {
+          this.setRandomFoodTile();
+          return;
+      }
+      this.setTileValue(randomFoodTile, 'food');
     },
+    toggleBorder() {
+      this.border = this.border === 'solid' ? 'passthrough' : 'solid';
+    },
+    togglePause() {
+      if (this.isPaused) {
+        this.interval = setInterval(this.moveSnake, this.gameSpeed);
+      } else {
+        clearInterval(this.interval);
+      }
+      this.isPaused = !this.isPaused;
+    },
+    toggleSpeed(newSpeed) {
+      this.gameSpeed = newSpeed;
+      if (!this.isPaused) {
+        clearInterval(this.interval);
+        this.interval = setInterval(this.moveSnake, this.gameSpeed);
+      }
+    },
+
+    resetGame() {
+      clearInterval(this.interval);
+      this.tiles = [];
+      this.snakeHeadIndex = 112;
+      this.snakeTailIndex = [114, 113, 112];
+      this.direction = 'left';
+      this.isPaused = true;
+
+      for (let i = 0; i < 225; i++) {
+        this.paintTile(i, null);
+      }
+
+      this.setSnakeInitialPosition();
+      this.setRandomFoodTile();
+    },
+
+    handleSnakeDeath() {
+      this.$emit('snakeDied');
+      this.resetGame();
+    },
+
     paintTile(tile, color) {
-        const element = document.getElementById(`tile-${tile-1}`);
-        if (element) {
-            element.classList.remove('tile-with-food');
-            element.classList.remove('tile-with-snake');
-            element.classList.add(`tile-with-${color}`);
-        }
+      const element = document.getElementById(`tile-${tile-1}`);
+      if (element) {
+        element.classList.remove('tile-with-food');
+        element.classList.remove('tile-with-snake');
+        element.classList.add(`tile-with-${color}`);
+      }
     },
     setTileValue(tile, value) {
       this.tiles[tile] = value;
@@ -43,29 +91,45 @@ export default {
     },
     moveSnake() {
       let nextSnakeHeadIndex;
+      let isDead;
+
+      const checkBorderCollision = () => {
+        if (this.border === 'solid' && !isDead) {
+          this.$emit('snakeDied');
+          this.handleSnakeDeath();
+          clearInterval(this.interval);
+          isDead = true;
+          return true;
+        }
+        return false;
+      };
 
       switch (this.direction) {
         case 'left':
           nextSnakeHeadIndex = this.snakeHeadIndex - 1;
           if (nextSnakeHeadIndex % 15 === 0) {
+            if (checkBorderCollision()) break;
             nextSnakeHeadIndex += 15;
           }
         break;
         case 'right':
           nextSnakeHeadIndex = this.snakeHeadIndex + 1;
           if (nextSnakeHeadIndex %  15 === 1) {
+            if (checkBorderCollision()) break;
             nextSnakeHeadIndex -= 15;
           }
           break;
         case 'up':
           nextSnakeHeadIndex = this.snakeHeadIndex - 15;
           if (nextSnakeHeadIndex < 1) {
+            if (checkBorderCollision()) break;
             nextSnakeHeadIndex += 225;
           }
           break;
         case 'down':
           nextSnakeHeadIndex = this.snakeHeadIndex + 15;
           if (nextSnakeHeadIndex > 225) {
+            if (checkBorderCollision()) break;
             nextSnakeHeadIndex -= 225;
           }
           break;
@@ -73,7 +137,10 @@ export default {
           break;
         }
 
-        this.snakeHeadIndex = nextSnakeHeadIndex;
+        if(!isDead)
+          this.snakeHeadIndex = nextSnakeHeadIndex;
+
+        isDead=false;
 
         this.setTileValue(this.snakeTailIndex[0], null);
         this.snakeTailIndex.shift();
@@ -82,7 +149,7 @@ export default {
         if (this.tiles[this.snakeHeadIndex] === 'snake') {
           this.setTileValue(this.snakeHeadIndex, 'snake');
           this.$emit('snakeDied');
-          clearInterval(this.interval);
+          this.handleSnakeDeath();
         }
   
         if (this.tiles[this.snakeHeadIndex] === 'food') {
@@ -98,29 +165,35 @@ export default {
   mounted() {
       this.setSnakeInitialPosition();
       this.setRandomFoodTile();
-
-      this.interval = setInterval(this.moveSnake, this.gameSpeed);
   },
   created() {
       document.addEventListener('keydown', (event) => {
-          switch (event.key) {
-              case 'ArrowUp':
-                  if (this.direction === 'down' || this.direction === 'up') return;
-                  this.direction = 'up';
-                  break;
-              case 'ArrowDown':
-                  if (this.direction === 'down' || this.direction === 'up') return;
-                  this.direction = 'down';
-                  break;
-              case 'ArrowLeft':
-                  if (this.direction === 'left' || this.direction === 'right') return;
-                  this.direction = 'left';
-                  break;
-              case 'ArrowRight':
-                  if (this.direction === 'left' || this.direction === 'right') return;
-                  this.direction = 'right';
-                  break;
-              default: break;
+        if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key) && this.isPaused) {
+            this.togglePause();
+        }
+
+        if (['Escape', 'p', 'P'].includes(event.key)) {
+            this.togglePause();
+        }
+
+        switch (event.key) {
+            case 'ArrowUp':
+                if (this.direction === 'down' || this.direction === 'up') return;
+                this.direction = 'up';
+                break;
+            case 'ArrowDown':
+                if (this.direction === 'down' || this.direction === 'up') return;
+                this.direction = 'down';
+                break;
+            case 'ArrowLeft':
+                if (this.direction === 'left' || this.direction === 'right') return;
+                this.direction = 'left';
+                break;
+            case 'ArrowRight':
+                if (this.direction === 'left' || this.direction === 'right') return;
+                this.direction = 'right';
+                break;
+            default: break;
           }
       });
   },

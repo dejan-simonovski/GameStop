@@ -1,19 +1,20 @@
 <template>
   <div class="game">
-    <span class="score">High score: {{ highScore.username }}, {{ highScore.score }}</span>
-    <span class="score">Score: {{ score }}</span>
-    <snake @onFoodEaten="increaseScore()" @snakeDied="save()"></snake>
+    <ScoreDisplay :score="score"></ScoreDisplay>
+    <Snake :speed="speed" :borders="borders" @onFoodEaten="increaseScore()" @snakeDied="save()"></Snake>
   </div>
 </template>
 
 <script>
 import Snake from './SnakeComponents/SnakeGame.vue';
-import { addHighScore, getHighestScoreForGame, getCurrentUser } from '@/auth'
+import ScoreDisplay from './SnakeComponents/Score.vue';
+import { addHighScore, getCurrentUser } from '@/auth'
 
 export default {
   name: 'SnakeGame',
   components: {
-    Snake
+    Snake,
+    ScoreDisplay
   },
   methods: {
     increaseScore() {
@@ -25,14 +26,11 @@ export default {
       this.score = 0;
     },
   },
-  computed: {
-    highScore() {
-      return getHighestScoreForGame("Snake");
-    },
-  },
-  data: () => ({
-    score: 0,
-  }),
+  data() {
+    return {
+      score: 0,
+    };
+  }
 };
 </script>
 
@@ -49,12 +47,5 @@ html,body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-}
-
-.score {
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  font-size: 20px;
-  margin-bottom: 10px;
-  color: black;
 }
 </style>
