@@ -4,6 +4,7 @@ import SnakeView from '../views/SnakeView.vue'
 import BreakoutView from '../views/BreakoutView.vue'
 import TicTacToeView from '../views/TicTacToeView.vue'
 import HangmanView from '../views/HangmanView.vue'
+import MemoryView from '../views/MemoryView.vue'
 import LoginView from '../views/LoginView.vue'
 import { isAuthenticated } from '@/auth'
 
@@ -41,6 +42,12 @@ const routes = [
     path: '/hangman',
     name: 'Hangman',
     component: HangmanView,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/memorygame',
+    name: 'Memory',
+    component: MemoryView,
     meta: { requiresAuth: true }
   }
 

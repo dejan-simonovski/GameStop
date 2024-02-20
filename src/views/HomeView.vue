@@ -22,16 +22,20 @@
           <button class="button">Tic Tac Toe</button>
         </router-link>
       </div>
-    </div>
-    <div class="container">
       <div class="game-container">
         <img src="../assets/hangman.png" alt="HANGMAN">
         <router-link to="/hangman" class="button-link">
           <button class="button">Hangman</button>
         </router-link>
       </div>
+      <div class="game-container">
+        <img src="../assets/memorygame.png" alt="MEMORY-GAME">
+        <router-link to="/memorygame" class="button-link">
+          <button class="button">Memory Game</button>
+        </router-link>
+      </div>
     </div>
-  </template>
+</template>
   
 <script>
 import { getCurrentUser, logout } from '@/auth'; 
@@ -98,7 +102,7 @@ img {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 5em;
+    margin: 1em;
 }
 
 </style>
