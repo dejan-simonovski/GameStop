@@ -1,16 +1,16 @@
 <template>
-    <div>
-      <div v-if="gameOver">Game Over!</div>
-      <div>
-        <div v-for="(card, index) in cards" :key="index" class="card" @click="flipCard(index)">
-          {{ card.flipped ? card.value : '' }}
-        </div>
+  <div class="container">
+    <div v-if="gameOver">Game Over!</div>
+    <div class="card-row" v-for="(row, rowIndex) in Math.ceil(cards.length / 4)" :key="rowIndex">
+      <div v-for="(card, colIndex) in cards.slice(rowIndex * 4, (rowIndex + 1) * 4)" :key="colIndex" class="card" @click="flipCard(rowIndex * 4 + colIndex)">
+        {{ card.flipped ? card.value : '' }}
       </div>
-      <button @click="restart">Restart Game</button>
     </div>
-  </template>
+    <button id="buttonRes" @click="restart">Restart Game</button>
+  </div>
+</template>
   
-  <script>
+<script>
   const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -69,20 +69,53 @@
         this.gameOver = false;
       },
     },
-  };
-  </script>
+  };  
+</script>
   
-  <style>
-  .card {
-    width: 100px;
-    height: 100px;
-    background-color: lightblue;
-    margin: 5px;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-    cursor: pointer;
-  }
-  </style>
+<style>
+.card {
+  width: 100px;
+  height: 100px;
+  background-color: rgb(227, 62, 12);
+  margin: 5px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px; 
+  cursor: pointer;
+  transition: 2s;
+  border-radius: 15px;
+  color: #ffffff;
+  font-size: 35px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.card-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+#buttonRes {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid #FF7F50;
+  border-radius: 5px;
+  color: #FF7F50;
+  background-color: white;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+  
+#buttonRes:hover {
+  background-color: #FF7F50;
+  color: white;
+  border-color: #ffffff;
+}
+.container {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+</style>
   
