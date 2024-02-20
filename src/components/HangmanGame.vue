@@ -78,6 +78,10 @@ export default {
         this.guessWord(input);
       }
       this.input = '';
+
+      if (this.maxWrongGuesses - this.getWrongGuessesCount() <= 0) {
+          this.gameOver = true;
+      }
     },
     guessLetter(letter) {
       this.guessedLetters.add(letter);
@@ -85,7 +89,8 @@ export default {
         if (!this.word.split('').some(letter => !this.guessedLetters.has(letter))) {
           this.gameWon = true;
           this.gameOver = true;
-        } else if (this.guessedLetters.size + this.guessedWords >= this.maxWrongGuesses) {
+        } 
+        if (this.guessedLetters.size + this.guessedWords >= this.maxWrongGuesses) {
           this.gameOver = true;
         }
       }
@@ -94,15 +99,10 @@ export default {
       if (word === this.word) {
         this.gameWon = true;
         this.gameOver = true;
-
-        console.log(3)
       }
       else
       {
         this.guessedWords++;
-      }
-      if (this.maxWrongGuesses - this.getWrongGuessesCount() <= 0) {
-          this.gameOver = true;
       }
     },
     restartGame() {
