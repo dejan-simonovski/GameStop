@@ -1,5 +1,6 @@
 <template>
   <div>
+    <ScoreDisplay :score="score" gameName="Hangman"></ScoreDisplay>
     <div>
       <p>Guess the word:</p>
       <p v-html="displayedWord"></p>
@@ -22,7 +23,13 @@
 </template>
 
 <script>
+import ScoreDisplay from "./Score.vue";
+import { addHighScore, getCurrentUser } from '@/auth'
+
 export default {
+  components: {
+    ScoreDisplay
+  },
   data() {
     return {
       word: '',
@@ -38,7 +45,8 @@ export default {
          'butterfly', 'superhero', 'galaxy', 'robot', 'adventure', 'treasure', 'castle', 
          'wizard', 'mermaid', 'narwhal', 'diamond', 'explosion', 'carousel', 'jellyfish', 
          'octopus', 'volcano', 'rocket', 'satellite', 'astronaut'],
-      input: ''
+      input: '',
+      score: 0
     };
   },
   computed: {
@@ -70,6 +78,11 @@ export default {
       this.gameWon = false;
       this.guessedWords = 0;
     },
+    save() {
+        const currentUser = getCurrentUser();
+        addHighScore("Hangman", currentUser.username, this.score);
+        this.score = 0;
+    },
     guess() {
       const input = this.input.toLowerCase();
       if (input.length === 1) {
@@ -89,16 +102,24 @@ export default {
         if (!this.word.split('').some(letter => !this.guessedLetters.has(letter))) {
           this.gameWon = true;
           this.gameOver = true;
+          this.score++;
         } 
         if (this.guessedLetters.size + this.guessedWords >= this.maxWrongGuesses) {
           this.gameOver = true;
         }
       }
+      console.log(this.displayedWord.split('_').length - 1)
+      if (this.displayedWord.split('_').length - 1 == 0) {
+          this.gameOver = true;
+          this.gameWon = true;
+          this.score++;
+        }
     },
     guessWord(word) {
       if (word === this.word) {
         this.gameWon = true;
         this.gameOver = true;
+        this.score++;
       }
       else
       {
@@ -111,6 +132,9 @@ export default {
     getWrongGuessesCount() {
       return Array.from(this.guessedLetters).filter(letter => !this.word.includes(letter)).length + this.guessedWords;
     }
+  },
+  unmounted() {
+    this.save();
   }
 };
 </script>

@@ -1,4 +1,5 @@
 <template>
+  <ScoreDisplay :score="score" gameName="MemoryGame"></ScoreDisplay>
   <div v-if="gameOver">Game Over!</div>
   <div class="card-row" v-for="(row, rowIndex) in Math.ceil(cards.length / 4)" :key="rowIndex">
     <div v-for="(card, colIndex) in cards.slice(rowIndex * 4, (rowIndex + 1) * 4)" :key="colIndex" class="card" :class="{ 'flipped': card.flipped, 'correct': card.matched }" @click="flipCard(rowIndex * 4 + colIndex)">
@@ -9,6 +10,9 @@
 </template>
 
 <script>
+import ScoreDisplay from "./Score.vue";
+import { addHighScore, getCurrentUser } from '@/auth'
+
 const shuffleArray = (array) => {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -18,12 +22,16 @@ const shuffleArray = (array) => {
 };
 
 export default {
+  components: {
+    ScoreDisplay
+  },
   data() {
     return {
       cards: [],
       flippedCards: [],
       gameOver: false,
       values: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'],
+      score: 0
     };
   },
   created() {
@@ -55,8 +63,15 @@ export default {
         this.cards[secondIndex].matched = true;
         if (this.cards.every(card => card.matched)) {
           this.gameOver = true;
+          this.score += 10;
+        }
+        else {
+          this.score++;
         }
       } else {
+        if(this.score > 0) {
+          this.score--;
+        }
         this.cards[firstIndex].flipped = false;
         this.cards[secondIndex].flipped = false;
       }
@@ -66,7 +81,15 @@ export default {
       this.initializeGame();
       this.gameOver = false;
     },
+    save() {
+        const currentUser = getCurrentUser();
+        addHighScore("MemoryGame", currentUser.username, this.score);
+        this.score = 0;
+    }
   },
+  unmounted(){
+    this.save();
+  }
 };
 </script>
 
