@@ -1,13 +1,13 @@
 <template>
   <div class="game">
-    <ScoreDisplay :score="score"></ScoreDisplay>
+    <ScoreDisplay :score="score" gameName="Snake"></ScoreDisplay>
     <Snake :speed="speed" :borders="borders" @onFoodEaten="increaseScore()" @snakeDied="save()"></Snake>
   </div>
 </template>
 
 <script>
 import Snake from './SnakeComponents/SnakeGame.vue';
-import ScoreDisplay from './SnakeComponents/Score.vue';
+import ScoreDisplay from './Score.vue';
 import { addHighScore, getCurrentUser } from '@/auth'
 
 export default {
