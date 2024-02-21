@@ -52,19 +52,7 @@ export default {
     },
 
     resetGame() {
-      clearInterval(this.interval);
-      this.tiles = [];
-      this.snakeHeadIndex = 112;
-      this.snakeTailIndex = [114, 113, 112];
-      this.direction = 'left';
-      this.isPaused = true;
-
-      for (let i = 0; i < 225; i++) {
-        this.paintTile(i, null);
-      }
-
-      this.setSnakeInitialPosition();
-      this.setRandomFoodTile();
+      location.reload();
     },
 
     handleSnakeDeath() {
@@ -97,7 +85,6 @@ export default {
         if (this.border === 'solid' && !isDead) {
           this.$emit('snakeDied');
           this.handleSnakeDeath();
-          clearInterval(this.interval);
           isDead = true;
           return true;
         }
@@ -163,8 +150,11 @@ export default {
     }
   },
   mounted() {
-      this.setSnakeInitialPosition();
-      this.setRandomFoodTile();
+    this.setSnakeInitialPosition();
+    this.setRandomFoodTile();
+  },
+  unmounted(){
+    this.handleSnakeDeath();
   },
   created() {
       document.addEventListener('keydown', (event) => {
