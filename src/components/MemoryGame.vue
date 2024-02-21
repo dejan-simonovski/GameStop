@@ -85,11 +85,12 @@ export default {
   border-radius: 15px;
   color: #ffffff;
   font-size: 35px;
+  transition: 0.5s;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 .card.flipped {
-  background-color: yellow;
+  background-color: red;
 }
 
 .card.correct {
@@ -99,12 +100,13 @@ export default {
 .card-row {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center; /* Center the rows horizontally */
+  justify-content: center;
 }
 
 #buttonRes {
   display: inline-block;
   padding: 10px 20px;
+  margin: 30px 0 30px 0;
   font-size: 16px;
   text-align: center;
   text-decoration: none;

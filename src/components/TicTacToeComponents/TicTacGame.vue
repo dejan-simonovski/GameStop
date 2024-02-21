@@ -9,6 +9,7 @@
 #buttonRes {
   display: inline-block;
   padding: 10px 20px;
+  margin-bottom: 30px;
   font-size: 16px;
   text-align: center;
   text-decoration: none;
@@ -20,7 +21,6 @@
   transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
-/* Стилови за кога мишот ќе се премести над копчето */
 #buttonRes:hover {
   background-color: #FF7F50;
   color: white;

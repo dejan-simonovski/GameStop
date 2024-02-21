@@ -1,17 +1,16 @@
 <template>
   <div id="app">
-  
-    <game />
+    <TicTacToe />
   </div>
 </template>
 
 <script>
-import Game from "./TicTacToeComponents/TicTacGame.vue";
+import TicTacToe from "./TicTacToeComponents/TicTacGame.vue";
 
 export default {
   name: "TicTacToeGame",
   components: {
-    Game
+    TicTacToe
   }
 };
 </script>
