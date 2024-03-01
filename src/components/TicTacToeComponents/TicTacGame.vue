@@ -1,8 +1,8 @@
 <template>
-  <div class="game-body">
+  <div class="game-body" style="margin-top: -5%;">
     <h2 class="game-status">{{ gameStatus }}</h2><br>
-    <ScoreDisplay :score="score" gameName="TicTacToe"></ScoreDisplay>
-    <game-board :tics="tics" :OnHandleClick="OnClicked"></game-board><br><br>
+    <ScoreDisplay :score="score" gameName="TicTacToe" style="margin-top: 0%;"></ScoreDisplay><br><br>
+    <game-board :tics="tics" :OnHandleClick="OnClicked"></game-board><br>
     <button id="buttonRes" v-if="isResetEnabled" @click="reset">Reset</button>
   </div>
 </template>

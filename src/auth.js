@@ -71,14 +71,13 @@ function getHighestScoreForGame(gameName) {
   const highScores = getHighScores();
   if (highScores[gameName]) {
     const sortedScores = highScores[gameName].sort((a, b) => b.score - a.score);
-    console.log(sortedScores[0])
     return sortedScores[0];
   }
   return 0;
 }
 
 function getCurrentUserHighestScoreForGame(gameName) {
-  const currentUser = getCurrentUser().username;
+  const currentUser = getCurrentUser();
   const highScores = getHighScores();
   if (currentUser && highScores[gameName]) {
     const userScoreEntry = highScores[gameName].find(entry => entry.username === currentUser.username);

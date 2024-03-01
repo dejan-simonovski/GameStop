@@ -1,7 +1,7 @@
 <template>
-    <div class="container">
-      <span v-if="currentUser">Logged in as: {{ currentUser.username }}</span>
-      <button v-if="currentUser" @click="logout" class="button" style="padding:0.2em; margin:0.2em">Logout</button>
+    <div class="container" style="flex-direction: column; margin-bottom: 2%;">
+      <span style="font-size: 20px;" v-if="currentUser">Logged in as: {{ currentUser.username }}</span>
+      <button v-if="currentUser" @click="logout" id="log_out" class="button" style=" margin:0.8em">Logout</button>
     </div>
     <div class="container">
       <div class="game-container">
@@ -63,22 +63,38 @@ export default {
   .container div {
     margin-right: 10px;
   }
-  
-.button {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    padding: 1em 5em 1em 5em;
-    background-color: rgb(255, 83, 53);
-    border-radius: 5px;
-    text-decoration: none;
-    color: #ffffff;
-    font-size: 1em;
-    font-weight: bold;
+
+
+.button{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 10px 20px;
+  margin-bottom: 30px;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid #FE633D;
+  border-radius: 5px;
+  color: white;
+  background-color: #FE633D;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
-  
+
 .button:hover {
-    background-color: red;
+  background-color:white;
+  color: #FE633D;
+  border-color: #FE633D;
+}
+#log_out{
+  background-color: #555555;
+  border: 2px solid #555555;
+}
+#log_out:hover{
+  background-color:white;
+  color: #555555;
+  border-color: #555555;
 }
   
 .button-link {
@@ -88,7 +104,8 @@ export default {
 }
 
 img {
-    width: 15em;
+    width: 14em;
+    height: 13em;
 }
 
 .game-container {

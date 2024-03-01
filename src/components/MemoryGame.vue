@@ -1,5 +1,5 @@
 <template>
-  <ScoreDisplay :score="score" gameName="MemoryGame"></ScoreDisplay>
+  <ScoreDisplay :score="score" gameName="MemoryGame"></ScoreDisplay><br>
   <div v-if="gameOver">Game Over!</div>
   <div class="card-row" v-for="(row, rowIndex) in Math.ceil(cards.length / 4)" :key="rowIndex">
     <div v-for="(card, colIndex) in cards.slice(rowIndex * 4, (rowIndex + 1) * 4)" :key="colIndex" class="card" :class="{ 'flipped': card.flipped, 'correct': card.matched }" @click="flipCard(rowIndex * 4 + colIndex)">
@@ -97,7 +97,7 @@ export default {
 .card {
   width: 100px;
   height: 100px;
-  background-color: rgb(227, 62, 12);
+  background-color: #fd6128;
   margin: 5px;
   display: inline-flex;
   justify-content: center;
@@ -113,7 +113,7 @@ export default {
 }
 
 .card.flipped {
-  background-color: red;
+  background-color: #fe946d;
 }
 
 .card.correct {

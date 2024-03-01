@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <ScoreDisplay :score="score" gameName="Hangman"></ScoreDisplay>
+  <div id="HG">
+    <ScoreDisplay :score="score" gameName="Hangman" style="margin-top: 0%;"></ScoreDisplay>
     <div>
       <p>Guess the word:</p>
       <p v-html="displayedWord"></p>
@@ -8,7 +8,7 @@
     <div>
       <p v-if="!gameOver">Guess a letter or the whole word:</p>
       <input type="text" v-model="input" :disabled="gameOver">
-      <button @click="guess" :disabled="gameOver">Guess</button>
+      <button style="margin-left:8px; " @click="guess" :disabled="gameOver">Guess</button>
     </div>
     <div v-if="gameOver">
       <p v-if="gameWon">You won! 🎉</p>
@@ -138,3 +138,43 @@ export default {
   }
 };
 </script>
+<style>
+#HG{
+  font-size: 20px;
+font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+}
+input[type="text"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+  width: 200px; 
+}
+
+input[type="text"]:focus {
+  border-color: #FF7F50;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #FF7F50;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #fe5315;
+}
+
+button:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+</style>

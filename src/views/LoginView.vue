@@ -3,7 +3,6 @@
       
       <div v-if="!showAddUserForm">
         <h2>Login</h2>
-        <!-- Login Form -->
         <div class="form-group">
           <input v-model="username" type="text" class="form-control" placeholder="Username">
         </div>
@@ -14,7 +13,6 @@
         <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
       </div>
       <div v-else>
-        <!-- Add User Form -->
         <h2>Register</h2>
         <div class="form-group">
           <input v-model="newUsername" type="text" class="form-control" placeholder="New Username">
@@ -23,14 +21,15 @@
           <input v-model="newPassword" type="password" class="form-control" placeholder="New Password">
         </div>
         <button @click="addUser" class="btn btn-success">Create account</button>
+        <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
       </div>
-      <!-- Toggle Button -->
       <button @click="toggleForm" style="margin:20px">{{ showAddUserForm ? 'Login' : 'Register' }}</button>
+     
     </div>
   </template>
   
   <script>
-  import { login, addUser } from '@/auth'; // Import the login and addUser functions from auth.js
+  import { login, addUser } from '@/auth';
   
   export default {
     data() {
@@ -40,7 +39,7 @@
         newUsername: '',
         newPassword: '',
         errorMessage: '',
-        showAddUserForm: false // Toggle state for showing the add user form
+        showAddUserForm: false
       };
     },
     methods: {
@@ -51,7 +50,6 @@
         }
         
         if (login(this.username, this.password)) {
-          // Redirect to the home page after successful login
           this.$router.push('/');
         } else {
           this.errorMessage = 'Invalid username or password';
@@ -63,17 +61,14 @@
           return;
         }
         
-        // Add the new user
         addUser(this.newUsername, this.newPassword);
         this.errorMessage = 'New user added successfully';
-        // Optionally clear the form fields after adding the user
+        this.toggleForm();
         this.newUsername = '';
         this.newPassword = '';
       },
       toggleForm() {
-        // Toggle the state to show/hide the add user form
         this.showAddUserForm = !this.showAddUserForm;
-        // Clear any error message when toggling forms
         this.errorMessage = '';
       }
     }

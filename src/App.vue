@@ -1,5 +1,5 @@
 <template>
-  <div class="logo-container">
+  <div class="logo-container" >
     <router-link to="/" class="logo-link">
       <img src="./assets/logo.png" alt="GAMESTOP" class="logo">
     </router-link>
@@ -8,11 +8,14 @@
 </template>
 
 <style>
+
 .logo-container {
   display: flex;
   max-width: 100%;
   margin: 0 auto;
   justify-content: center;
+  margin-top: -7%;
+  
 }
 
 .logo {

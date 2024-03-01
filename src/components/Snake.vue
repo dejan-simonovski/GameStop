@@ -1,6 +1,6 @@
 <template>
   <div class="game">
-    <ScoreDisplay :score="score" gameName="Snake"></ScoreDisplay>
+    <ScoreDisplay :score="score" gameName="Snake" ></ScoreDisplay><br>
     <Snake :speed="speed" :borders="borders" @onFoodEaten="increaseScore()" @snakeDied="save()"></Snake>
   </div>
 </template>

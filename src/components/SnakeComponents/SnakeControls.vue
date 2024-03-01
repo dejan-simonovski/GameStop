@@ -1,12 +1,13 @@
 <template>
+  <br>
   <div class="controls">
-    <label>Border:</label>
+    <label style="margin-left: -6%;">Border:</label>
     <select v-model="selectedBorder" @change="changeBorder" :disabled="!isPaused">
       <option value="solid">Solid</option>
       <option value="passthrough">Passthrough</option>
     </select>
-    <label>Speed:</label>
-    <select v-model="selectedSpeed" @change="changeSpeed" :disabled="!isPaused">
+    <label style="margin-left: 6%;">Speed:</label>
+    <select style=" margin-right: 6%;" v-model="selectedSpeed" @change="changeSpeed" :disabled="!isPaused">
       <option v-for="(speedOption, index) in speedOptions" :key="index" :value="speed[index]">{{ speedOption }}</option>
     </select>
     <button @click="togglePause" class="button">{{ isPaused ? 'Resume' : 'Pause' }}</button>
@@ -69,19 +70,67 @@ export default {
   margin-bottom: 10px;
 }
 
-.button {
-    display: inline-block;
-    padding: 1px;
-    margin-right: 5px;
-    background-color: rgb(255, 83, 53);
-    border-radius: 5px;
-    text-decoration: none;
-    color: #ffffff;
-    font-size: 1em;
-    font-weight: bold;
+button{
+
+  justify-content: center;
+  padding: 10px 20px;
+  margin-bottom: 30px;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid #FE633D;
+  border-radius: 5px;
+  color: white;
+  background-color: #FE633D;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  margin-top: 3%;
 }
-  
+
 .button:hover {
-    background-color: red;
+  background-color:white;
+  color: #FE633D;
+  border-color: #FE633D;
 }
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  outline: none;
+  
+  padding: 8px 12px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+
+select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+
+select:after {
+  content: '\25BC';
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+
+select:hover {
+  border-color: #999;
+}
+
+
+select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 </style>

@@ -1,12 +1,13 @@
 <template>
-  <div>
-    <span class="score">High score for {{ gameName }}: {{ highScore.username }}, {{ highScore.score }}</span><br/>
+  <div style="margin-top: -3%;">
+    <span class="score">High score: {{ highScore.username }} {{ highScore.score }}</span><br/>
+    <span class="score">Personal best: {{ personalBest }}</span><br/>
     <span class="score">Score: {{ score }}</span>
   </div>
 </template>
 
 <script>
-import { getHighestScoreForGame } from '@/auth';
+import { getHighestScoreForGame, getCurrentUserHighestScoreForGame } from '@/auth';
 
 export default {
   name: 'ScoreDisplay',
@@ -18,6 +19,9 @@ export default {
     highScore() {
       return getHighestScoreForGame(this.gameName);
     },
+    personalBest() {
+      return getCurrentUserHighestScoreForGame(this.gameName);
+    }
   },
 };
 </script>
