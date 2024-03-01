@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import SnakeView from '../views/SnakeView.vue'
-import BreakoutView from '../views/BreakoutView.vue'
 import TicTacToeView from '../views/TicTacToeView.vue'
 import HangmanView from '../views/HangmanView.vue'
 import MemoryView from '../views/MemoryView.vue'
@@ -19,12 +18,6 @@ const routes = [
     path: '/snake',
     name: 'Snake',
     component: SnakeView,
-    meta: { requiresAuth: true }
-  },
-  {
-    path: '/breakout',
-    name: 'Breakout',
-    component: BreakoutView,
     meta: { requiresAuth: true }
   },
   {

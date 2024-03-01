@@ -11,12 +11,6 @@
         </router-link>
       </div>
       <div class="game-container">
-        <img src="../assets/breakout.png" alt="BREAKOUT">
-        <router-link to="/breakout" class="button-link">
-          <button class="button">Breakout</button>
-        </router-link>
-      </div>
-      <div class="game-container">
         <img src="../assets/tic-tac-toe.png" alt="TIC-TAC-TOE">
         <router-link to="/tictactoe" class="button-link">
           <button class="button">Tic Tac Toe</button>
