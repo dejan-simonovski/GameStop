@@ -1,12 +1,18 @@
 <template>
   <div class="controls">
     <label>Border:</label>
-    <button @click="toggleBorder" class="button">{{ borderButtonText }}</button>
+    <select v-model="selectedBorder" @change="changeBorder" :disabled="!isPaused">
+      <option value="solid">Solid</option>
+      <option value="passthrough">Passthrough</option>
+    </select>
     <label>Speed:</label>
-    <button @click="toggleSpeed" class="button">{{ gameSpeedButtonText }}</button>
+    <select v-model="selectedSpeed" @change="changeSpeed" :disabled="!isPaused">
+      <option v-for="(speedOption, index) in speedOptions" :key="index" :value="speed[index]">{{ speedOption }}</option>
+    </select>
     <button @click="togglePause" class="button">{{ isPaused ? 'Resume' : 'Pause' }}</button>
   </div>
 </template>
+
 
 <script>
 export default {
@@ -21,18 +27,19 @@ export default {
     }
   },
   data() {
-  return {
-    speedOptions: ['Low', 'Mid', 'High'],
-    speed: [200, 150, 50],
-    currentSpeedIndex: 1
-  };
-},
+    return {
+      speedOptions: ['Low', 'Mid', 'High'],
+      speed: [200, 150, 50],
+      selectedSpeed: 150, // Default to Mid speed
+      selectedBorder: 'solid' // Default to solid border
+    };
+  },
   computed: {
     gameSpeedButtonText() {
       return this.speedOptions[this.currentSpeedIndex];
     },
     borderButtonText() {
-      return this.borderStyle === 'solid' ? 'Solid' : 'Passthrough'
+      return this.selectedBorder === 'solid' ? 'Solid' : 'Passthrough';
     }
   },
   methods: {
@@ -45,10 +52,17 @@ export default {
     toggleSpeed() {
       this.currentSpeedIndex = (this.currentSpeedIndex + 1) % 3;
       this.$emit('toggle-speed', this.speed[this.currentSpeedIndex]);
+    },
+    changeSpeed() {
+      this.$emit('toggle-speed', this.selectedSpeed);
+    },
+    changeBorder() {
+      this.$emit('toggle-border', this.selectedBorder);
     }
   }
 };
 </script>
+
 
 <style scoped>
 .controls {

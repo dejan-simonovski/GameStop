@@ -4,7 +4,7 @@
       <div class="tile" v-for="i in 225" :key="i" :id="`tile-${i-1}`"></div>
     </div>
   </div>
-  <SnakeControls :isPaused="isPaused" :borderStyle="border" @toggle-border="toggleBorder" @toggle-pause="togglePause" @toggle-speed="toggleSpeed"/>
+  <SnakeControls :isPaused="isPaused" @toggle-border="toggleBorder" @toggle-pause="togglePause" @toggle-speed="toggleSpeed"/>
 </template>
 
 <script>
@@ -32,8 +32,8 @@ export default {
       }
       this.setTileValue(randomFoodTile, 'food');
     },
-    toggleBorder() {
-      this.border = this.border === 'solid' ? 'passthrough' : 'solid';
+    toggleBorder(border) {
+      this.border = border;
     },
     togglePause() {
       if (this.isPaused) {
@@ -45,10 +45,6 @@ export default {
     },
     toggleSpeed(newSpeed) {
       this.gameSpeed = newSpeed;
-      if (!this.isPaused) {
-        clearInterval(this.interval);
-        this.interval = setInterval(this.moveSnake, this.gameSpeed);
-      }
     },
 
     resetGame() {
