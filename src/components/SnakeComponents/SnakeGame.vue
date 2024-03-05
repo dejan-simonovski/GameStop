@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="board">
-      <div class="tile" v-for="i in 225" :key="i" :id="`tile-${i}`"></div>
+    <div class="canvas">
+      <div class="block" v-for="i in 225" :key="i" :id="`block-${i}`"></div>
     </div>
   </div>
   <SnakeControls :isPaused="isPaused" @toggle-border="toggleBorder" @toggle-pause="togglePause" @toggle-speed="toggleSpeed"/>
@@ -15,7 +15,7 @@ export default {
     SnakeControls
   },
   data: () => ({
-    tiles: [],
+    blocks: [],
     snakeHeadIndex: 112,
     snakeTailIndex: [114, 113, 112],
     gameSpeed: 150,
@@ -24,13 +24,13 @@ export default {
     border: 'solid'
   }),
   methods: {
-    setRandomAppleTile() {
-      const randomAppleTile = (Math.floor(Math.random() * 225)) + 1;
-      if (this.tiles[randomAppleTile]) {
-          this.setRandomAppleTile();
+    setRandomAppleBlock() {
+      const randomAppleBlock = (Math.floor(Math.random() * 225)) + 1;
+      if (this.blocks[randomAppleBlock]) {
+          this.setRandomAppleBlock();
           return;
       }
-      this.setTileValue(randomAppleTile, 'apple');
+      this.setBlockValue(randomAppleBlock, 'apple');
     },
     toggleBorder(border) {
       this.border = border;
@@ -56,22 +56,22 @@ export default {
       this.resetGame();
     },
 
-    paintTile(tile, color) {
-      const element = document.getElementById(`tile-${tile}`);
+    paintBlock(block, color) {
+      const element = document.getElementById(`block-${block}`);
       if (element) {
-        element.classList.remove('tile-with-apple');
-        element.classList.remove('tile-with-snake');
-        element.classList.add(`tile-with-${color}`);
+        element.classList.remove('block-with-apple');
+        element.classList.remove('block-with-snake');
+        element.classList.add(`block-with-${color}`);
       }
     },
-    setTileValue(tile, value) {
-      this.tiles[tile] = value;
-      this.paintTile(tile, value);
+    setBlockValue(block, value) {
+      this.blocks[block] = value;
+      this.paintBlock(block, value);
     },
     setSnakeInitialPosition() {
-      this.setTileValue(112, 'snake');
-      this.setTileValue(113, 'snake');
-      this.setTileValue(114, 'snake');
+      this.setBlockValue(112, 'snake');
+      this.setBlockValue(113, 'snake');
+      this.setBlockValue(114, 'snake');
     },
     moveSnake() {
       let nextSnakeHeadIndex;
@@ -125,29 +125,29 @@ export default {
 
         isDead=false;
 
-        this.setTileValue(this.snakeTailIndex[0], null);
+        this.setBlockValue(this.snakeTailIndex[0], null);
         this.snakeTailIndex.shift();
 
   
-        if (this.tiles[this.snakeHeadIndex] === 'snake') {
-          this.setTileValue(this.snakeHeadIndex, 'snake');
+        if (this.blocks[this.snakeHeadIndex] === 'snake') {
+          this.setBlockValue(this.snakeHeadIndex, 'snake');
           this.$emit('snakeDied');
           this.handleSnakeDeath();
         }
   
-        if (this.tiles[this.snakeHeadIndex] === 'apple') {
+        if (this.blocks[this.snakeHeadIndex] === 'apple') {
           this.snakeTailIndex.push(this.snakeTailIndex.slice(-1));
-          this.setRandomAppleTile();
+          this.setRandomAppleBlock();
           this.$emit('onAppleEaten');
         }
   
-        this.setTileValue(this.snakeHeadIndex, 'snake');
+        this.setBlockValue(this.snakeHeadIndex, 'snake');
         this.snakeTailIndex.push(this.snakeHeadIndex);
     }
   },
   mounted() {
     this.setSnakeInitialPosition();
-    this.setRandomAppleTile();
+    this.setRandomAppleBlock();
   },
   unmounted(){
     this.handleSnakeDeath();
@@ -187,7 +187,7 @@ export default {
 </script>
 
 <style scoped>
-.board {
+.canvas {
   display: grid;
   border-style: 1px solid black;
   grid-template-columns: repeat(15, 20px);
@@ -197,17 +197,17 @@ export default {
   border: 1px solid black;
 }
 
-.tile {
+.block {
   width: 20px;
   height: 20px;
   background-color: rgb(255, 255, 253);
 }
 
-.tile-with-apple {
+.block-with-apple {
   background-color: rgb(233, 54, 54);
 }
 
-.tile-with-snake {
+.block-with-snake {
   background-color: rgb(66, 209, 66);
 }
 </style>
