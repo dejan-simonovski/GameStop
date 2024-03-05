@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="board">
-      <div class="tile" v-for="i in 225" :key="i" :id="`tile-${i-1}`"></div>
+      <div class="tile" v-for="i in 225" :key="i" :id="`tile-${i}`"></div>
     </div>
   </div>
   <SnakeControls :isPaused="isPaused" @toggle-border="toggleBorder" @toggle-pause="togglePause" @toggle-speed="toggleSpeed"/>
@@ -57,7 +57,7 @@ export default {
     },
 
     paintTile(tile, color) {
-      const element = document.getElementById(`tile-${tile-1}`);
+      const element = document.getElementById(`tile-${tile}`);
       if (element) {
         element.classList.remove('tile-with-apple');
         element.classList.remove('tile-with-snake');
