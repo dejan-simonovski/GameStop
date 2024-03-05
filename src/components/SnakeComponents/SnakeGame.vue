@@ -24,13 +24,13 @@ export default {
     border: 'solid'
   }),
   methods: {
-    setRandomFoodTile() {
-      const randomFoodTile = (Math.floor(Math.random() * 225)) + 1;
-      if (this.tiles[randomFoodTile]) {
-          this.setRandomFoodTile();
+    setRandomAppleTile() {
+      const randomAppleTile = (Math.floor(Math.random() * 225)) + 1;
+      if (this.tiles[randomAppleTile]) {
+          this.setRandomAppleTile();
           return;
       }
-      this.setTileValue(randomFoodTile, 'food');
+      this.setTileValue(randomAppleTile, 'apple');
     },
     toggleBorder(border) {
       this.border = border;
@@ -59,7 +59,7 @@ export default {
     paintTile(tile, color) {
       const element = document.getElementById(`tile-${tile-1}`);
       if (element) {
-        element.classList.remove('tile-with-food');
+        element.classList.remove('tile-with-apple');
         element.classList.remove('tile-with-snake');
         element.classList.add(`tile-with-${color}`);
       }
@@ -135,10 +135,10 @@ export default {
           this.handleSnakeDeath();
         }
   
-        if (this.tiles[this.snakeHeadIndex] === 'food') {
+        if (this.tiles[this.snakeHeadIndex] === 'apple') {
           this.snakeTailIndex.push(this.snakeTailIndex.slice(-1));
-          this.setRandomFoodTile();
-          this.$emit('onFoodEaten');
+          this.setRandomAppleTile();
+          this.$emit('onAppleEaten');
         }
   
         this.setTileValue(this.snakeHeadIndex, 'snake');
@@ -147,7 +147,7 @@ export default {
   },
   mounted() {
     this.setSnakeInitialPosition();
-    this.setRandomFoodTile();
+    this.setRandomAppleTile();
   },
   unmounted(){
     this.handleSnakeDeath();
@@ -203,7 +203,7 @@ export default {
   background-color: rgb(255, 255, 253);
 }
 
-.tile-with-food {
+.tile-with-apple {
   background-color: rgb(233, 54, 54);
 }
 
