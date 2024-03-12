@@ -108,7 +108,6 @@ export default {
           this.gameOver = true;
         }
       }
-      console.log(this.displayedWord.split('_').length - 1)
       if (this.displayedWord.split('_').length - 1 == 0) {
           this.gameOver = true;
           this.gameWon = true;

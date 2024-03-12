@@ -79,7 +79,6 @@ export default {
 
       const checkBorderCollision = () => {
         if (this.border === 'solid' && !isDead) {
-          this.$emit('snakeDied');
           this.handleSnakeDeath();
           isDead = true;
           return true;
