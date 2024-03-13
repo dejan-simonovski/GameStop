@@ -44,15 +44,8 @@ export default {
     }
   },
   methods: {
-    toggleBorder() {
-      this.$emit('toggle-border');
-    },
     togglePause() {
       this.$emit('toggle-pause');
-    },
-    toggleSpeed() {
-      this.currentSpeedIndex = (this.currentSpeedIndex + 1) % 3;
-      this.$emit('toggle-speed', this.speed[this.currentSpeedIndex]);
     },
     changeSpeed() {
       this.$emit('toggle-speed', this.selectedSpeed);
